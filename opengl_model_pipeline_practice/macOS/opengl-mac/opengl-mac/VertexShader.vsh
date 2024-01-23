@@ -1,9 +1,12 @@
 #version 330 core
-layout (location = 0) in vec3 aPos;
-void main() 
+
+layout(location = 0) in vec3 position;
+layout(location = 1) in vec4 color;
+
+out vec4 vColor;
+
+void main()
 {
-    gl_Position = vec4(aPos.x, aPos.y, aPos.z, 1.0);
-//    gl_Position = vec4(aPos.x, aPos.y, aPos.z, 1.0);
-//    gl_Position = vec4(1.0f, 1.0f, 1.0f, 1.0f);
-//    gl_PointSize = 64.0;
+    vColor = color;
+    gl_Position = vec4(position.x, position.y, position.z, 1.0);
 }

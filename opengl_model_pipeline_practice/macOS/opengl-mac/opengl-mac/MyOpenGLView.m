@@ -121,17 +121,24 @@
         1.0f,  1.0f, 0.0f,   // (x,y,z) = (1,1,0)t
         0.f, 1.0f, 0.0f,  //(x,y,z) = (0,1,0)
     };
+    float colors[] = {
+        1.0f, 0.0f, 0.0f, 1.0,  //  r
+        0.0f, 1.0f, 0.0f, 1.0,  //   g
+        0.0f, 0.0f, 1.0f, 1.0,   // b
+    };
     unsigned int indices[] = {  // note that we start from 0!
         0, 1, 2,  // first Triangle
         0, 2, 3,   // second Triangle
     };
-    unsigned int VBO, VAO, EBO;
+    
+    
+    unsigned int VBO_vertext, VBO_color, VAO, EBO;
     // bind the Vertex Array Object first, then bind and set vertex buffer(s), and then configure vertex attributes(s).
     glGenVertexArrays(1, &VAO);
     glBindVertexArray(VAO);
     
-    glGenBuffers(1, &VBO);
-    glBindBuffer(GL_ARRAY_BUFFER, VBO);
+    glGenBuffers(1, &VBO_vertext);
+    glBindBuffer(GL_ARRAY_BUFFER, VBO_vertext);
     glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
     
     glGenBuffers(1, &EBO);
@@ -140,6 +147,12 @@
     
     glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
     glEnableVertexAttribArray(0);
+    
+    glGenBuffers(1, &VBO_color);
+    glBindBuffer(GL_ARRAY_BUFFER, VBO_color);
+    glBufferData(GL_ARRAY_BUFFER, sizeof(colors), colors, GL_STATIC_DRAW);
+    glVertexAttribPointer(1, 4, GL_FLOAT, GL_FALSE, 4 * sizeof(float), (void*)0);
+    glEnableVertexAttribArray(1);
     
     // note that this is allowed, the call to glVertexAttribPointer registered VBO as the vertex attribute's bound vertex buffer object so afterwards we can safely unbind
     glBindBuffer(GL_ARRAY_BUFFER, 0);
