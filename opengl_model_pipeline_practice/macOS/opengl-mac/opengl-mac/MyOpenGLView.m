@@ -8,6 +8,13 @@
 
 #import "MyOpenGLView.h"
 
+@interface MyOpenGLView ()
+
+@property (nonatomic, copy) NSString *vertexString;
+@property (nonatomic, copy) NSString *fragmentString;
+
+@end
+
 @implementation MyOpenGLView
 
 - (instancetype)initWithFrame:(NSRect)frameRect {
@@ -35,6 +42,25 @@
     NSOpenGLPixelFormat *pixelFormat = [[NSOpenGLPixelFormat alloc] initWithAttributes:pixelFormatAttributes];
     
     super.pixelFormat = pixelFormat;
+    // load glsl file
+    NSString *vertexFile = [[NSBundle mainBundle] pathForResource:@"VertexShader" ofType:@"vsh"];
+    NSString *fragmentFile = [[NSBundle mainBundle] pathForResource:@"FragmentShader" ofType:@"fsh"];
+
+    NSError *error;
+
+    NSString *vertexString = [NSString stringWithContentsOfFile:vertexFile encoding:NSUTF8StringEncoding error:&error];
+    if (!vertexString) {
+        NSLog(@"vanney code log : error loading vertex shader : %@", error.localizedDescription);
+        exit(1);
+    }
+    self.vertexString = vertexString;
+
+    NSString *fragmentString = [NSString stringWithContentsOfFile:fragmentFile encoding:NSUTF8StringEncoding error:&error];
+    if (!fragmentString) {
+        NSLog(@"vanney code log : error loading fragment shader : %@", error.localizedDescription);
+        exit(1);
+    }
+    self.fragmentString = fragmentString;
 }
 
 - (void)drawRect:(NSRect)dirtyRect {
@@ -45,23 +71,13 @@
     // 3. Define and compile vertex and fragment shaders
     GLuint  vs;
     GLuint  fs;
-    const char *vss = "#version 330 core\n"
-    "layout (location = 0) in vec3 aPos;\n"
-    "void main()\n"
-    "{\n"
-    "    gl_Position = vec4(aPos.x, aPos.y, aPos.z, 1.0);\n"
-    "}\0";
     
-    const char *fss = "#version 330 core\n"
-    "out vec4 FragColor;\n"
-    "void main()\n"
-    "{\n"
-    "    FragColor = vec4(1.0f, 0.5f, 0.2f, 1.0f);\n"
-    "}\n\0";
-    
+    const char *vss = [self.vertexString UTF8String];
     vs = glCreateShader(GL_VERTEX_SHADER);
     glShaderSource(vs, 1, &vss, NULL);
     glCompileShader(vs);
+    
+    const char *fss = [self.fragmentString UTF8String];
     fs = glCreateShader(GL_FRAGMENT_SHADER);
     glShaderSource(fs, 1, &fss, NULL);
     glCompileShader(fs);
@@ -100,14 +116,14 @@
     printf("positionUniform: %i, colourAttribute: %i, positionAttribute: %i\n",positionUniform,colourAttribute,positionAttribute);
     // There is no space (or other values) between each set of 3 values. The values are tightly packed in the array.
     float vertices[] = {
-        0.5f,  0.5f, 0.0f,  // top right
-        0.5f, -0.5f, 0.0f,  // bottom right
-        -0.5f, -0.5f, 0.0f,  // bottom left
-        -0.5f,  0.5f, 0.0f   // top left
+        0.0f,  0.0f, 0.0f,  //  (x,y,z) = (0,0,0)
+        1.0f, 0.0f, 0.0f,  // (x,y,z) = (1,0,0)
+        1.0f,  1.0f, 0.0f,   // (x,y,z) = (1,1,0)t
+        0.f, 1.0f, 0.0f,  //(x,y,z) = (0,1,0)
     };
     unsigned int indices[] = {  // note that we start from 0!
-        0, 1, 3,  // first Triangle
-        1, 2, 3   // second Triangle
+        0, 1, 2,  // first Triangle
+        0, 2, 3,   // second Triangle
     };
     unsigned int VBO, VAO, EBO;
     // bind the Vertex Array Object first, then bind and set vertex buffer(s), and then configure vertex attributes(s).
@@ -135,7 +151,7 @@
     // VAOs requires a call to glBindVertexArray anyways so we generally don't unbind VAOs (nor VBOs) when it's not directly necessary.
     glBindVertexArray(0);
     // Drawing code here.
-    glViewport(10, 10, 100, 100);
+    glViewport(50, 50, 100, 100);
     glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
     glClear(GL_COLOR_BUFFER_BIT);
     
