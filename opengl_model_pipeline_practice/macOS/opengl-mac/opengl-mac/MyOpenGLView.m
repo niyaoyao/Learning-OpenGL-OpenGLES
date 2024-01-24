@@ -115,28 +115,36 @@
     glDeleteShader(fs);
     printf("positionUniform: %i, colourAttribute: %i, positionAttribute: %i\n",positionUniform,colourAttribute,positionAttribute);
     // There is no space (or other values) between each set of 3 values. The values are tightly packed in the array.
-    float vertices[] = {
-        0.0f,  -1.0f, 0.0f,  //  (x,y,z) = (0,-1,0)
-        1.0f, -1.0f, 0.0f,  // (x,y,z) = (1,-1,0)
-        1.0f,  1.0f, 0.0f,   // (x,y,z) = (1,1,0)
-        -1.0f, 1.0f, 0.0f,  //(x,y,z) = (-1,1,0)
-        -1.0f, -0.0f, 0.0f,  //(x,y,z) = (-1,-0,0)
-        -1.0f, -0.5f, 0.0f,  //(x,y,z) = (-1,-0.5,0)
-        
-    };
+//    float verticesTriangle[] = {
+//        0.0f,  -1.0f, 0.0f,  //  (x,y,z) = (0,-1,0)
+//        1.0f, -1.0f, 0.0f,  // (x,y,z) = (1,-1,0)
+//        1.0f,  1.0f, 0.0f,   // (x,y,z) = (1,1,0)
+//        -1.0f, 1.0f, 0.0f,  //(x,y,z) = (-1,1,0)
+//        -1.0f, -0.0f, 0.0f,  //(x,y,z) = (-1,-0,0)
+//        -1.0f, -0.5f, 0.0f,  //(x,y,z) = (-1,-0.5,0)
+//        
+//    };
     float colors[] = {
         1.0f, 0.0f, 0.0f, 1.0,  //  r
         0.0f, 1.0f, 0.0f, 1.0,  //   g
         0.0f, 0.0f, 1.0f, 1.0,   // b
     };
-    unsigned int indices[] = {  // note that we start from 0!
-        0, 1, 2,  // first Triangle
-        0, 2, 3,   // second Triangle
-        0, 3, 4,   // third Triangle
-        0, 4, 5,   // third Triangle
-    };
-    
-    
+//    unsigned int indices[] = {  // note that we start from 0!
+//        0, 1, 2,  // first Triangle
+//        0, 2, 3,   // second Triangle
+//        0, 3, 4,   // third Triangle
+//        0, 4, 5,   // third Triangle
+//    };
+//    
+    const int numPoints = 50;
+    float vertices[2* numPoints] = {};
+    for (int i = 0; i < numPoints; i++)
+    {
+        float x = (float)(i);
+        x = 2 * x / (numPoints - 1) - 1;
+        vertices[2 * i] = x;
+        vertices[2 * i + 1] = sin(3.14159 * x);
+    }
     unsigned int VBO_vertext, VBO_color, VAO, EBO;
     // bind the Vertex Array Object first, then bind and set vertex buffer(s), and then configure vertex attributes(s).
     glGenVertexArrays(1, &VAO);
@@ -146,11 +154,11 @@
     glBindBuffer(GL_ARRAY_BUFFER, VBO_vertext);
     glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
     
-    glGenBuffers(1, &EBO);
-    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
-    glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
+//    glGenBuffers(1, &EBO);
+//    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
+//    glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
     
-    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
+    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 2 * sizeof(float), (void*)0);
     glEnableVertexAttribArray(0);
     
     glGenBuffers(1, &VBO_color);
@@ -169,16 +177,15 @@
     // VAOs requires a call to glBindVertexArray anyways so we generally don't unbind VAOs (nor VBOs) when it's not directly necessary.
     glBindVertexArray(0);
     // Drawing code here.
-    glViewport(100, 100, 100, 100);
+    glViewport(100, 100, 500, 400);
     glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
     glClear(GL_COLOR_BUFFER_BIT);
     
     // draw our first triangle
     glUseProgram(shaderProgram);
     glBindVertexArray(VAO);
-///  mode count= 3 *n type indices
-    glDrawElements(GL_TRIANGLES, 12, GL_UNSIGNED_INT, 0);
-    
+    glDrawArrays(GL_LINE_STRIP, 0, numPoints);
+    glLineWidth(3);
     [[self openGLContext] flushBuffer];
 }
 
