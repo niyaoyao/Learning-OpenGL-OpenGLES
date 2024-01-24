@@ -116,10 +116,13 @@
     printf("positionUniform: %i, colourAttribute: %i, positionAttribute: %i\n",positionUniform,colourAttribute,positionAttribute);
     // There is no space (or other values) between each set of 3 values. The values are tightly packed in the array.
     float vertices[] = {
-        0.0f,  0.0f, 0.0f,  //  (x,y,z) = (0,0,0)
-        1.0f, 0.0f, 0.0f,  // (x,y,z) = (1,0,0)
-        1.0f,  1.0f, 0.0f,   // (x,y,z) = (1,1,0)t
-        0.f, 1.0f, 0.0f,  //(x,y,z) = (0,1,0)
+        0.0f,  -1.0f, 0.0f,  //  (x,y,z) = (0,-1,0)
+        1.0f, -1.0f, 0.0f,  // (x,y,z) = (1,-1,0)
+        1.0f,  1.0f, 0.0f,   // (x,y,z) = (1,1,0)
+        -1.0f, 1.0f, 0.0f,  //(x,y,z) = (-1,1,0)
+        -1.0f, -0.0f, 0.0f,  //(x,y,z) = (-1,-0,0)
+        -1.0f, -0.5f, 0.0f,  //(x,y,z) = (-1,-0.5,0)
+        
     };
     float colors[] = {
         1.0f, 0.0f, 0.0f, 1.0,  //  r
@@ -129,6 +132,8 @@
     unsigned int indices[] = {  // note that we start from 0!
         0, 1, 2,  // first Triangle
         0, 2, 3,   // second Triangle
+        0, 3, 4,   // third Triangle
+        0, 4, 5,   // third Triangle
     };
     
     
@@ -164,19 +169,15 @@
     // VAOs requires a call to glBindVertexArray anyways so we generally don't unbind VAOs (nor VBOs) when it's not directly necessary.
     glBindVertexArray(0);
     // Drawing code here.
-    glViewport(50, 50, 100, 100);
+    glViewport(100, 100, 100, 100);
     glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
     glClear(GL_COLOR_BUFFER_BIT);
     
     // draw our first triangle
-//    glUseProgram(shaderProgram);
-//    glBindVertexArray(VAO);
-//    glDrawArrays(GL_TRIANGLES, 0, 3);
-//    glBindVertexArray(0);
     glUseProgram(shaderProgram);
     glBindVertexArray(VAO);
-
-    glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
+///  mode count= 3 *n type indices
+    glDrawElements(GL_TRIANGLES, 12, GL_UNSIGNED_INT, 0);
     
     [[self openGLContext] flushBuffer];
 }
