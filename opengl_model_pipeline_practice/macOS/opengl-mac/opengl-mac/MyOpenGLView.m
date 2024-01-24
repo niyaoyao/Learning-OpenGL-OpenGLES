@@ -120,16 +120,20 @@
         1.0f, 0.0f, 0.0f,  // (x,y,z) = (1,0,0)
         1.0f,  1.0f, 0.0f,   // (x,y,z) = (1,1,0)t
         0.f, 1.0f, 0.0f,  //(x,y,z) = (0,1,0)
+//        -1.0f, -1.0f, 0.0f,
+//        1.0f, -1.0f, 0.0f,
+//        0.0f,  1.0f, 0.0f,
     };
     float colors[] = {
         1.0f, 0.0f, 0.0f, 1.0,  //  r
         0.0f, 1.0f, 0.0f, 1.0,  //   g
         0.0f, 0.0f, 1.0f, 1.0,   // b
+        0.0f, 0.5f, 1.0f, 1.0,   // b
     };
-    unsigned int indices[] = {  // note that we start from 0!
-        0, 1, 2,  // first Triangle
-        0, 2, 3,   // second Triangle
-    };
+//    unsigned int indices[] = {  // note that we start from 0!
+//        0, 1, 2,  // first Triangle
+//        0, 2, 3,   // second Triangle
+//    };
     
     
     unsigned int VBO_vertext, VBO_color, VAO, EBO;
@@ -141,12 +145,21 @@
     glBindBuffer(GL_ARRAY_BUFFER, VBO_vertext);
     glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
     
-    glGenBuffers(1, &EBO);
-    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
-    glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
+//    glGenBuffers(1, &EBO);
+//    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
+//    glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
     
-    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
+    // 1rst attribute buffer : vertices
     glEnableVertexAttribArray(0);
+    glBindBuffer(GL_ARRAY_BUFFER, VBO_vertext);
+    glVertexAttribPointer(
+        0,                  // attribute 0. No particular reason for 0, but must match the layout in the shader.
+        3,                  // size
+        GL_FLOAT,           // type
+        GL_FALSE,           // normalized?
+        0,                  // stride
+        (void*)0            // array buffer offset
+    );
     
     glGenBuffers(1, &VBO_color);
     glBindBuffer(GL_ARRAY_BUFFER, VBO_color);
@@ -162,21 +175,23 @@
     
     // You can unbind the VAO afterwards so other VAO calls won't accidentally modify this VAO, but this rarely happens. Modifying other
     // VAOs requires a call to glBindVertexArray anyways so we generally don't unbind VAOs (nor VBOs) when it's not directly necessary.
-    glBindVertexArray(0);
+//    glBindVertexArray(0);
     // Drawing code here.
-    glViewport(50, 50, 100, 100);
+    glViewport(100, 100, 100, 100);
     glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
     glClear(GL_COLOR_BUFFER_BIT);
     
     // draw our first triangle
 //    glUseProgram(shaderProgram);
 //    glBindVertexArray(VAO);
-//    glDrawArrays(GL_TRIANGLES, 0, 3);
+    glDrawArrays(GL_TRIANGLES, 0, 3);
 //    glBindVertexArray(0);
     glUseProgram(shaderProgram);
-    glBindVertexArray(VAO);
+//    glBindVertexArray(VAO);
+    // Draw the triangle !
+    glDrawArrays(GL_TRIANGLES, 0, 3); // 3 indices starting at 0 -> 1 triangle
 
-    glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
+//    glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
     
     [[self openGLContext] flushBuffer];
 }
