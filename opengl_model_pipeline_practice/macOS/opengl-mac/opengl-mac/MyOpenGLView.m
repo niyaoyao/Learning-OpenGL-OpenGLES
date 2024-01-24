@@ -128,6 +128,201 @@
         1.0f, 0.0f, 0.0f, 1.0,  //  r
         0.0f, 1.0f, 0.0f, 1.0,  //   g
         0.0f, 0.0f, 1.0f, 1.0,   // b
+        1.0f, 0.0f, 0.0f, 1.0,  //  r
+        0.0f, 1.0f, 0.0f, 1.0,  //   g
+        0.0f, 0.0f, 1.0f, 1.0,   // b
+        1.0f, 0.0f, 0.0f, 1.0,  //  r
+        0.0f, 1.0f, 0.0f, 1.0,  //   g
+        0.0f, 0.0f, 1.0f, 1.0,   // b
+        1.0f, 0.0f, 0.0f, 1.0,  //  r
+        0.0f, 1.0f, 0.0f, 1.0,  //   g
+        0.0f, 0.0f, 1.0f, 1.0,   // b
+        1.0f, 0.0f, 0.0f, 1.0,  //  r
+        0.0f, 1.0f, 0.0f, 1.0,  //   g
+        0.0f, 0.0f, 1.0f, 1.0,   // b
+        1.0f, 0.0f, 0.0f, 1.0,  //  r
+        0.0f, 1.0f, 0.0f, 1.0,  //   g
+        0.0f, 0.0f, 1.0f, 1.0,   // b
+        1.0f, 0.0f, 0.0f, 1.0,  //  r
+        0.0f, 1.0f, 0.0f, 1.0,  //   g
+        0.0f, 0.0f, 1.0f, 1.0,   // b
+        1.0f, 0.0f, 0.0f, 1.0,  //  r
+        0.0f, 1.0f, 0.0f, 1.0,  //   g
+        0.0f, 0.0f, 1.0f, 1.0,   // b
+        1.0f, 0.0f, 0.0f, 1.0,  //  r
+        0.0f, 1.0f, 0.0f, 1.0,  //   g
+        0.0f, 0.0f, 1.0f, 1.0,   // b
+        1.0f, 0.0f, 0.0f, 1.0,  //  r
+        0.0f, 1.0f, 0.0f, 1.0,  //   g
+        0.0f, 0.0f, 1.0f, 1.0,   // b
+        1.0f, 0.0f, 0.0f, 1.0,  //  r
+        0.0f, 1.0f, 0.0f, 1.0,  //   g
+        0.0f, 0.0f, 1.0f, 1.0,   // b
+        1.0f, 0.0f, 0.0f, 1.0,  //  r
+        0.0f, 1.0f, 0.0f, 1.0,  //   g
+        0.0f, 0.0f, 1.0f, 1.0,   // b
+        1.0f, 0.0f, 0.0f, 1.0,  //  r
+        0.0f, 1.0f, 0.0f, 1.0,  //   g
+        0.0f, 0.0f, 1.0f, 1.0,   // b
+        1.0f, 0.0f, 0.0f, 1.0,  //  r
+        0.0f, 1.0f, 0.0f, 1.0,  //   g
+        0.0f, 0.0f, 1.0f, 1.0,   // b
+        1.0f, 0.0f, 0.0f, 1.0,  //  r
+        0.0f, 1.0f, 0.0f, 1.0,  //   g
+        0.0f, 0.0f, 1.0f, 1.0,   // b
+        1.0f, 0.0f, 0.0f, 1.0,  //  r
+        0.0f, 1.0f, 0.0f, 1.0,  //   g
+        0.0f, 0.0f, 1.0f, 1.0,   // b
+        1.0f, 0.0f, 0.0f, 1.0,  //  r
+        0.0f, 1.0f, 0.0f, 1.0,  //   g
+        0.0f, 0.0f, 1.0f, 1.0,   // b
+        1.0f, 0.0f, 0.0f, 1.0,  //  r
+        0.0f, 1.0f, 0.0f, 1.0,  //   g
+        0.0f, 0.0f, 1.0f, 1.0,   // b
+        1.0f, 0.0f, 0.0f, 1.0,  //  r
+        0.0f, 1.0f, 0.0f, 1.0,  //   g
+        0.0f, 0.0f, 1.0f, 1.0,   // b
+        1.0f, 0.0f, 0.0f, 1.0,  //  r
+        0.0f, 1.0f, 0.0f, 1.0,  //   g
+        0.0f, 0.0f, 1.0f, 1.0,   // b
+        1.0f, 0.0f, 0.0f, 1.0,  //  r
+        0.0f, 1.0f, 0.0f, 1.0,  //   g
+        0.0f, 0.0f, 1.0f, 1.0,   // b
+        1.0f, 0.0f, 0.0f, 1.0,  //  r
+        0.0f, 1.0f, 0.0f, 1.0,  //   g
+        0.0f, 0.0f, 1.0f, 1.0,   // b
+        1.0f, 0.0f, 0.0f, 1.0,  //  r
+        0.0f, 1.0f, 0.0f, 1.0,  //   g
+        0.0f, 0.0f, 1.0f, 1.0,   // b
+        1.0f, 0.0f, 0.0f, 1.0,  //  r
+        0.0f, 1.0f, 0.0f, 1.0,  //   g
+        0.0f, 0.0f, 1.0f, 1.0,   // b
+        1.0f, 0.0f, 0.0f, 1.0,  //  r
+        0.0f, 1.0f, 0.0f, 1.0,  //   g
+        0.0f, 0.0f, 1.0f, 1.0,   // b
+        1.0f, 0.0f, 0.0f, 1.0,  //  r
+        0.0f, 1.0f, 0.0f, 1.0,  //   g
+        0.0f, 0.0f, 1.0f, 1.0,   // b
+        1.0f, 0.0f, 0.0f, 1.0,  //  r
+        0.0f, 1.0f, 0.0f, 1.0,  //   g
+        0.0f, 0.0f, 1.0f, 1.0,   // b
+        1.0f, 0.0f, 0.0f, 1.0,  //  r
+        0.0f, 1.0f, 0.0f, 1.0,  //   g
+        0.0f, 0.0f, 1.0f, 1.0,   // b
+        1.0f, 0.0f, 0.0f, 1.0,  //  r
+        0.0f, 1.0f, 0.0f, 1.0,  //   g
+        0.0f, 0.0f, 1.0f, 1.0,   // b
+        1.0f, 0.0f, 0.0f, 1.0,  //  r
+        0.0f, 1.0f, 0.0f, 1.0,  //   g
+        0.0f, 0.0f, 1.0f, 1.0,   // b
+        1.0f, 0.0f, 0.0f, 1.0,  //  r
+        0.0f, 1.0f, 0.0f, 1.0,  //   g
+        0.0f, 0.0f, 1.0f, 1.0,   // b
+        1.0f, 0.0f, 0.0f, 1.0,  //  r
+        0.0f, 1.0f, 0.0f, 1.0,  //   g
+        0.0f, 0.0f, 1.0f, 1.0,   // b
+        1.0f, 0.0f, 0.0f, 1.0,  //  r
+        0.0f, 1.0f, 0.0f, 1.0,  //   g
+        0.0f, 0.0f, 1.0f, 1.0,   // b
+        1.0f, 0.0f, 0.0f, 1.0,  //  r
+        0.0f, 1.0f, 0.0f, 1.0,  //   g
+        0.0f, 0.0f, 1.0f, 1.0,   // b
+        1.0f, 0.0f, 0.0f, 1.0,  //  r
+        0.0f, 1.0f, 0.0f, 1.0,  //   g
+        0.0f, 0.0f, 1.0f, 1.0,   // b
+        1.0f, 0.0f, 0.0f, 1.0,  //  r
+        0.0f, 1.0f, 0.0f, 1.0,  //   g
+        0.0f, 0.0f, 1.0f, 1.0,   // b
+        1.0f, 0.0f, 0.0f, 1.0,  //  r
+        0.0f, 1.0f, 0.0f, 1.0,  //   g
+        0.0f, 0.0f, 1.0f, 1.0,   // b
+        1.0f, 0.0f, 0.0f, 1.0,  //  r
+        0.0f, 1.0f, 0.0f, 1.0,  //   g
+        0.0f, 0.0f, 1.0f, 1.0,   // b
+        1.0f, 0.0f, 0.0f, 1.0,  //  r
+        0.0f, 1.0f, 0.0f, 1.0,  //   g
+        0.0f, 0.0f, 1.0f, 1.0,   // b
+        1.0f, 0.0f, 0.0f, 1.0,  //  r
+        0.0f, 1.0f, 0.0f, 1.0,  //   g
+        0.0f, 0.0f, 1.0f, 1.0,   // b
+        1.0f, 0.0f, 0.0f, 1.0,  //  r
+        0.0f, 1.0f, 0.0f, 1.0,  //   g
+        0.0f, 0.0f, 1.0f, 1.0,   // b
+        1.0f, 0.0f, 0.0f, 1.0,  //  r
+        0.0f, 1.0f, 0.0f, 1.0,  //   g
+        0.0f, 0.0f, 1.0f, 1.0,   // b
+        1.0f, 0.0f, 0.0f, 1.0,  //  r
+        0.0f, 1.0f, 0.0f, 1.0,  //   g
+        0.0f, 0.0f, 1.0f, 1.0,   // b
+        1.0f, 0.0f, 0.0f, 1.0,  //  r
+        0.0f, 1.0f, 0.0f, 1.0,  //   g
+        0.0f, 0.0f, 1.0f, 1.0,   // b
+        1.0f, 0.0f, 0.0f, 1.0,  //  r
+        0.0f, 1.0f, 0.0f, 1.0,  //   g
+        0.0f, 0.0f, 1.0f, 1.0,   // b
+        1.0f, 0.0f, 0.0f, 1.0,  //  r
+        0.0f, 1.0f, 0.0f, 1.0,  //   g
+        0.0f, 0.0f, 1.0f, 1.0,   // b
+        1.0f, 0.0f, 0.0f, 1.0,  //  r
+        0.0f, 1.0f, 0.0f, 1.0,  //   g
+        0.0f, 0.0f, 1.0f, 1.0,   // b
+        1.0f, 0.0f, 0.0f, 1.0,  //  r
+        0.0f, 1.0f, 0.0f, 1.0,  //   g
+        0.0f, 0.0f, 1.0f, 1.0,   // b
+        1.0f, 0.0f, 0.0f, 1.0,  //  r
+        0.0f, 1.0f, 0.0f, 1.0,  //   g
+        0.0f, 0.0f, 1.0f, 1.0,   // b
+        1.0f, 0.0f, 0.0f, 1.0,  //  r
+        0.0f, 1.0f, 0.0f, 1.0,  //   g
+        0.0f, 0.0f, 1.0f, 1.0,   // b
+        1.0f, 0.0f, 0.0f, 1.0,  //  r
+        0.0f, 1.0f, 0.0f, 1.0,  //   g
+        0.0f, 0.0f, 1.0f, 1.0,   // b
+        1.0f, 0.0f, 0.0f, 1.0,  //  r
+        0.0f, 1.0f, 0.0f, 1.0,  //   g
+        0.0f, 0.0f, 1.0f, 1.0,   // b
+        1.0f, 0.0f, 0.0f, 1.0,  //  r
+        0.0f, 1.0f, 0.0f, 1.0,  //   g
+        0.0f, 0.0f, 1.0f, 1.0,   // b
+        1.0f, 0.0f, 0.0f, 1.0,  //  r
+        0.0f, 1.0f, 0.0f, 1.0,  //   g
+        0.0f, 0.0f, 1.0f, 1.0,   // b
+        1.0f, 0.0f, 0.0f, 1.0,  //  r
+        0.0f, 1.0f, 0.0f, 1.0,  //   g
+        0.0f, 0.0f, 1.0f, 1.0,   // b
+        1.0f, 0.0f, 0.0f, 1.0,  //  r
+        0.0f, 1.0f, 0.0f, 1.0,  //   g
+        0.0f, 0.0f, 1.0f, 1.0,   // b
+        1.0f, 0.0f, 0.0f, 1.0,  //  r
+        0.0f, 1.0f, 0.0f, 1.0,  //   g
+        0.0f, 0.0f, 1.0f, 1.0,   // b
+        1.0f, 0.0f, 0.0f, 1.0,  //  r
+        0.0f, 1.0f, 0.0f, 1.0,  //   g
+        0.0f, 0.0f, 1.0f, 1.0,   // b
+        1.0f, 0.0f, 0.0f, 1.0,  //  r
+        0.0f, 1.0f, 0.0f, 1.0,  //   g
+        0.0f, 0.0f, 1.0f, 1.0,   // b
+        1.0f, 0.0f, 0.0f, 1.0,  //  r
+        0.0f, 1.0f, 0.0f, 1.0,  //   g
+        0.0f, 0.0f, 1.0f, 1.0,   // b
+        1.0f, 0.0f, 0.0f, 1.0,  //  r
+        0.0f, 1.0f, 0.0f, 1.0,  //   g
+        0.0f, 0.0f, 1.0f, 1.0,   // b
+        1.0f, 0.0f, 0.0f, 1.0,  //  r
+        0.0f, 1.0f, 0.0f, 1.0,  //   g
+        0.0f, 0.0f, 1.0f, 1.0,   // b
+        1.0f, 0.0f, 0.0f, 1.0,  //  r
+        0.0f, 1.0f, 0.0f, 1.0,  //   g
+        0.0f, 0.0f, 1.0f, 1.0,   // b
+        1.0f, 0.0f, 0.0f, 1.0,  //  r
+        0.0f, 1.0f, 0.0f, 1.0,  //   g
+        0.0f, 0.0f, 1.0f, 1.0,   // b
+        1.0f, 0.0f, 0.0f, 1.0,  //  r
+        0.0f, 1.0f, 0.0f, 1.0,  //   g
+        0.0f, 0.0f, 1.0f, 1.0,   // b
+        1.0f, 0.0f, 0.0f, 1.0,  //  r
+        0.0f, 1.0f, 0.0f, 1.0,  //   g
+        0.0f, 0.0f, 1.0f, 1.0,   // b
     };
 //    unsigned int indices[] = {  // note that we start from 0!
 //        0, 1, 2,  // first Triangle
@@ -136,36 +331,40 @@
 //        0, 4, 5,   // third Triangle
 //    };
 //    
-    const int numPoints = 50;
-    float vertices[2* numPoints] = {};
+    const int numPoints = 200;
+    float verticesX[numPoints] = {};
+    float verticesY[numPoints] = {};
     for (int i = 0; i < numPoints; i++)
     {
-        float x = (float)(i);
-        x = 2 * x / (numPoints - 1) - 1;
-        vertices[2 * i] = x;
-        vertices[2 * i + 1] = sin(3.14159 * x);
+        float t = (float)(i);
+        t = t / (numPoints - 1) * 2 - 1;
+        t = t * 3.14159;
+        verticesX[i] = 0.75 * cos(3 * t);
+        verticesY[i] = 0.75 * sin(2 * t);
     }
-    unsigned int VBO_vertext, VBO_color, VAO, EBO;
+    unsigned int VBO_vertext, VBO_vertext2, VBO_color, VAO, EBO;
     // bind the Vertex Array Object first, then bind and set vertex buffer(s), and then configure vertex attributes(s).
     glGenVertexArrays(1, &VAO);
     glBindVertexArray(VAO);
     
     glGenBuffers(1, &VBO_vertext);
     glBindBuffer(GL_ARRAY_BUFFER, VBO_vertext);
-    glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
-    
-//    glGenBuffers(1, &EBO);
-//    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
-//    glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
-    
-    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 2 * sizeof(float), (void*)0);
+    glBufferData(GL_ARRAY_BUFFER, sizeof(verticesX), verticesX, GL_STATIC_DRAW);
+    glVertexAttribPointer(0, 1, GL_FLOAT, GL_FALSE, 1 * sizeof(float), (void*)0);
     glEnableVertexAttribArray(0);
+    
+    glGenBuffers(1, &VBO_vertext2);
+    glBindBuffer(GL_ARRAY_BUFFER, VBO_vertext2);
+    glBufferData(GL_ARRAY_BUFFER, sizeof(verticesY), verticesY, GL_STATIC_DRAW);
+    glVertexAttribPointer(1, 1, GL_FLOAT, GL_FALSE, 1 * sizeof(float), (void*)0);
+    glEnableVertexAttribArray(1);
+    
     
     glGenBuffers(1, &VBO_color);
     glBindBuffer(GL_ARRAY_BUFFER, VBO_color);
     glBufferData(GL_ARRAY_BUFFER, sizeof(colors), colors, GL_STATIC_DRAW);
-    glVertexAttribPointer(1, 4, GL_FLOAT, GL_FALSE, 4 * sizeof(float), (void*)0);
-    glEnableVertexAttribArray(1);
+    glVertexAttribPointer(2, 4, GL_FLOAT, GL_FALSE, 4 * sizeof(float), (void*)0);
+    glEnableVertexAttribArray(2);
     
     // note that this is allowed, the call to glVertexAttribPointer registered VBO as the vertex attribute's bound vertex buffer object so afterwards we can safely unbind
     glBindBuffer(GL_ARRAY_BUFFER, 0);
