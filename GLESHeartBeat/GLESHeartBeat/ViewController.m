@@ -109,13 +109,31 @@
 
     for (int i = 0; i < numPoints; i++)
     {
+        /*
+           Graph function:
+           (x^2 + y^2 - 1)^3 - x^2*y^3 = 0
+           => y^2 - y*cbrt(x^2) + x^2 - 1 = 0
+           */
         float x = (float)(i);
         x = 2 * x / (numPoints - 1) - 1;
         float delta = cbrt(x*x) * cbrt(x*x) - 4*x*x + 4;
-        float y1 = (cbrt(x*x) + sqrt(delta)) / 2;
+        float y1 = 0.0;
+        if (x < 0 && x >= -1) {
+            y1 = sqrt(0.25 - (x + 0.5) * (x + 0.5));
+        } else {
+            y1 = sqrt(0.25 - (x - 0.5) * (x - 0.5));
+        }
+        y1 += 0.8;
+//        float y1 = (cbrt(x*x) + sqrt(delta)) / 2;
         float y2 = (cbrt(x*x) - sqrt(delta)) / 2;
+        if (i%2==0) {
+            [self beatX:&x y:&y1];
+        } else {
+            [self beatX:&x y:&y2];
+        }
         verticesX[i] = x;
         verticesY[i] = i % 2 == 0 ? y1 - 0.5 : y2;
+//        NSLog(@"%.2f,%.2f,%.2f,%.2f,", x, y1, y2, delta);
     }
     unsigned int VBO_vertext, VBO_vertext2, VBO_color, VAO, EBO;
     // bind the Vertex Array Object first, then bind and set vertex buffer(s), and then configure vertex attributes(s).
@@ -167,5 +185,14 @@
     glBindVertexArray(0);
 }
 
-
+- (void)beatX:(float *)x y:(float *)y {
+    float p = 0.0;
+    NSTimeInterval time = [[NSDate new] timeIntervalSince1970];
+    float tt = fmod(time,1.5)/1.5;
+    float ss = pow(tt,.2)*0.5 + 0.5;
+    ss = 1.0 + ss*0.5*sin(tt*6.2831*3.0 + *y * 0.5)*exp(-tt*4.0);
+//    p *= float2(0.5,1.5) + ss*float2(0.5,-0.5);
+    *x *= ss * 0.5 + 0.5;
+    *y *= ss *(- 0.5) + 1.5;
+}
 @end
