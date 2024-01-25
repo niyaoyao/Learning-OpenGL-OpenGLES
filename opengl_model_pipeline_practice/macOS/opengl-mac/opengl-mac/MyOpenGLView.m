@@ -137,7 +137,6 @@
     const int numPoints = 200;
     float verticesX[numPoints] = {};
     float verticesY[numPoints] = {};
-    float verticesY2[numPoints] = {};
 
     for (int i = 0; i < numPoints; i++)
     {
@@ -147,10 +146,7 @@
         float y1 = (cbrt(x*x) + sqrt(delta)) / 2;
         float y2 = (cbrt(x*x) - sqrt(delta)) / 2;
         verticesX[i] = x;
-        verticesY[i] =  y1 - 0.5;
-        verticesY2[i] =  y2;
-    
-        NSLog(@"(x,y, y2) => (%.2f, %.2f, %.2f)", verticesX[i], verticesY[i], verticesY[i]);
+        verticesY[i] = i % 2 == 0 ? y1 - 0.5 : y2;
     }
     unsigned int VBO_vertext, VBO_vertext2, VBO_color, VAO, EBO;
     // bind the Vertex Array Object first, then bind and set vertex buffer(s), and then configure vertex attributes(s).
@@ -186,7 +182,7 @@
     // VAOs requires a call to glBindVertexArray anyways so we generally don't unbind VAOs (nor VBOs) when it's not directly necessary.
     glBindVertexArray(0);
     // Drawing code here.
-    glViewport(10, 50, 100, 100);
+    glViewport(100, 100, 100, 100);
     glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
     glClear(GL_COLOR_BUFFER_BIT);
     
