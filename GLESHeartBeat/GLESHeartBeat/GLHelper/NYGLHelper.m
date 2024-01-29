@@ -29,7 +29,7 @@
 + (const char *)characherString:(NSString *)string {
     NSString *utf8EncodeStr = nil;
     @try {
-        NSString *utf8EncodeStr =  [self utf8String:string];
+        utf8EncodeStr =  [self utf8String:string];
     } @catch (NSException *exception) {
         @throw exception;
     } @finally {
@@ -37,6 +37,17 @@
     }
     
     return [utf8EncodeStr UTF8String];
+}
+
++ (void)beatX:(float *)x y:(float *)y {
+    float p = 0.0;
+    NSTimeInterval time = [[NSDate new] timeIntervalSince1970];
+    float tt = fmod(time,1.5)/1.5;
+    float ss = pow(tt,.2)*0.5 + 0.5;
+    ss = 1.0 + ss*0.5*sin(tt*6.2831*3.0 + *y * 0.5)*exp(-tt*4.0);
+//    p *= float2(0.5,1.5) + ss*float2(0.5,-0.5);
+    *x *= ss * 0.5 + 0.5;
+    *y *= ss *(- 0.5) + 1.5;
 }
 
 @end

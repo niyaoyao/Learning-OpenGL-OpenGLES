@@ -20,7 +20,10 @@
 		470644C52B620A78007DA2FC /* FragmentShader.glsl in Resources */ = {isa = PBXBuildFile; fileRef = 470644C32B620A78007DA2FC /* FragmentShader.glsl */; };
 		470644C62B620A78007DA2FC /* VertexShader.glsl in Resources */ = {isa = PBXBuildFile; fileRef = 470644C42B620A78007DA2FC /* VertexShader.glsl */; };
 		470644C92B620A92007DA2FC /* NYGLHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 470644C82B620A92007DA2FC /* NYGLHelper.m */; };
-		470644CC2B62177C007DA2FC /* Shader.m in Sources */ = {isa = PBXBuildFile; fileRef = 470644CA2B62177C007DA2FC /* Shader.m */; };
+		4708E2542B6376BD007F55BF /* GLTextureViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4708E2532B6376BD007F55BF /* GLTextureViewController.m */; };
+		4708E2572B63787A007F55BF /* GLTransformationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4708E2562B63787A007F55BF /* GLTransformationViewController.m */; };
+		4708E25A2B637890007F55BF /* GLSignGLViewViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4708E2592B637890007F55BF /* GLSignGLViewViewController.m */; };
+		4708E25D2B637EB7007F55BF /* NYGLShader.m in Sources */ = {isa = PBXBuildFile; fileRef = 4708E25C2B637EB7007F55BF /* NYGLShader.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -62,8 +65,14 @@
 		470644C42B620A78007DA2FC /* VertexShader.glsl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = VertexShader.glsl; sourceTree = "<group>"; };
 		470644C72B620A92007DA2FC /* NYGLHelper.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NYGLHelper.h; sourceTree = "<group>"; };
 		470644C82B620A92007DA2FC /* NYGLHelper.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = NYGLHelper.m; sourceTree = "<group>"; };
-		470644CA2B62177C007DA2FC /* Shader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Shader.m; sourceTree = "<group>"; };
-		470644CB2B62177C007DA2FC /* Shader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Shader.h; sourceTree = "<group>"; };
+		4708E2522B6376BD007F55BF /* GLTextureViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GLTextureViewController.h; sourceTree = "<group>"; };
+		4708E2532B6376BD007F55BF /* GLTextureViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GLTextureViewController.m; sourceTree = "<group>"; };
+		4708E2552B63787A007F55BF /* GLTransformationViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GLTransformationViewController.h; sourceTree = "<group>"; };
+		4708E2562B63787A007F55BF /* GLTransformationViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GLTransformationViewController.m; sourceTree = "<group>"; };
+		4708E2582B637890007F55BF /* GLSignGLViewViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GLSignGLViewViewController.h; sourceTree = "<group>"; };
+		4708E2592B637890007F55BF /* GLSignGLViewViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GLSignGLViewViewController.m; sourceTree = "<group>"; };
+		4708E25B2B637EB7007F55BF /* NYGLShader.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = NYGLShader.h; path = GLHelper/NYGLShader.h; sourceTree = "<group>"; };
+		4708E25C2B637EB7007F55BF /* NYGLShader.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = NYGLShader.m; path = GLHelper/NYGLShader.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -126,6 +135,14 @@
 				4706449B2B6206CF007DA2FC /* LaunchScreen.storyboard */,
 				4706449E2B6206CF007DA2FC /* Info.plist */,
 				4706449F2B6206CF007DA2FC /* main.m */,
+				4708E2522B6376BD007F55BF /* GLTextureViewController.h */,
+				4708E2532B6376BD007F55BF /* GLTextureViewController.m */,
+				4708E2552B63787A007F55BF /* GLTransformationViewController.h */,
+				4708E2562B63787A007F55BF /* GLTransformationViewController.m */,
+				4708E2582B637890007F55BF /* GLSignGLViewViewController.h */,
+				4708E2592B637890007F55BF /* GLSignGLViewViewController.m */,
+				4708E25B2B637EB7007F55BF /* NYGLShader.h */,
+				4708E25C2B637EB7007F55BF /* NYGLShader.m */,
 			);
 			path = GLESHeartBeat;
 			sourceTree = "<group>";
@@ -150,8 +167,6 @@
 		470644C22B6206FB007DA2FC /* GLHelper */ = {
 			isa = PBXGroup;
 			children = (
-				470644CB2B62177C007DA2FC /* Shader.h */,
-				470644CA2B62177C007DA2FC /* Shader.m */,
 				470644C32B620A78007DA2FC /* FragmentShader.glsl */,
 				470644C42B620A78007DA2FC /* VertexShader.glsl */,
 				470644C72B620A92007DA2FC /* NYGLHelper.h */,
@@ -292,12 +307,15 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4708E25A2B637890007F55BF /* GLSignGLViewViewController.m in Sources */,
 				470644952B6206CE007DA2FC /* ViewController.m in Sources */,
 				4706448F2B6206CE007DA2FC /* AppDelegate.m in Sources */,
+				4708E2572B63787A007F55BF /* GLTransformationViewController.m in Sources */,
 				470644C92B620A92007DA2FC /* NYGLHelper.m in Sources */,
 				470644A02B6206CF007DA2FC /* main.m in Sources */,
-				470644CC2B62177C007DA2FC /* Shader.m in Sources */,
+				4708E25D2B637EB7007F55BF /* NYGLShader.m in Sources */,
 				470644922B6206CE007DA2FC /* SceneDelegate.m in Sources */,
+				4708E2542B6376BD007F55BF /* GLTextureViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -15,6 +15,8 @@ NS_ASSUME_NONNULL_BEGIN
 + (NSString *)loadBundle:(NSBundle *)bundle shaderFilename:(NSString *)filename extension:(NSString *)extension;
 + (NSString *)utf8String:(NSString *)string;
 + (const char *)characherString:(NSString *)string;
++ (void)beatX:(float *)x y:(float *)y;
+
 @end
 
 NS_ASSUME_NONNULL_END

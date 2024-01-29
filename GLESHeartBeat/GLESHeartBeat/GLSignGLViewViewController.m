@@ -1,104 +1,76 @@
 //
-//  ViewController.m
+//  GLSignGLViewViewController.m
 //  GLESHeartBeat
 //
-//  Created by ibu_mob_basic_9 on 2024/1/25.
+//  Created by ibu_mob_basic_9 on 2024/1/26.
 //
 
-#import "ViewController.h"
+#import "GLSignGLViewViewController.h"
 #import <OpenGLES/ES3/gl.h>
+#import <GLKit/GLKit.h>
+#import "NYGLShader.h"
 #import "NYGLHelper.h"
 
-@interface ViewController () <GLKViewDelegate> {
-    GLuint shaderProgram;
-    
-    GLint positionUniform;
-    GLint colourAttribute;
-    GLint positionAttribute;
-}
+@interface GLSignGLViewViewController () <GLKViewDelegate>
 
-@property (nonatomic, copy) NSString *vertexString;
-@property (nonatomic, copy) NSString *fragmentString;
+@property (nonatomic, strong) GLKView *glView;
+@property (nonatomic, strong) NYGLShader *shader;
+@property (nonatomic, strong) CADisplayLink *displayLink;
+@property (nonatomic, strong) NSThread *thread;
 
 @end
 
-@implementation ViewController
+@implementation GLSignGLViewViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    [self setupGLView];
+    self.view.backgroundColor = UIColor.grayColor;
+    [self.view addSubview:self.glView];
+    [self startTimerThread];
+}
+
+- (void)viewWillLayoutSubviews {
+    [super viewWillLayoutSubviews];
+    self.glView.frame = self.view.frame;
+}
+
+- (void)loadShader {
+    self.shader = [[NYGLShader alloc] init];
+    [self.shader loadVertexShaderFileName:@"VertexShader" extension:@"glsl"];
+    [self.shader loadFragmentShaderFileName:@"FragmentShader" extension:@"glsl"];
+    [self.shader linkShaderProgram];
+}
+
+- (void)addCADisplayLink {
+    self.displayLink = [CADisplayLink displayLinkWithTarget:self selector:@selector(refreshGLView)];
+    [self.displayLink addToRunLoop:[NSRunLoop currentRunLoop] forMode:NSRunLoopCommonModes];
+    self.displayLink.preferredFramesPerSecond = 60;
+}
+
+- (void)refreshGLView {
+    NSLog(@"refresh");
+    [self.glView display];
+}
+
+- (void)startTimerThread {
+    NSThread* thread = [[NSThread alloc] initWithTarget:self selector:@selector(setupTimerThread) object:nil];
+    [thread start];
+    self.thread = thread;
+}
+
+- (void)setupTimerThread {
+    @autoreleasepool {
+        NSRunLoop* runLoop = [NSRunLoop currentRunLoop];
+        [self addCADisplayLink];
+        [self loadShader];
+        [runLoop run];
+    }
+  
 }
 
 
-- (void)setupGLView {
-    // Create an OpenGL ES context and assign it to the view loaded from storyboard
-    GLKView *view = (GLKView *)self.view;
-    view.context = [[EAGLContext alloc] initWithAPI:kEAGLRenderingAPIOpenGLES3];
- 
-    // Configure renderbuffers created by the view
-    view.drawableColorFormat = GLKViewDrawableColorFormatRGBA8888;
-    view.drawableDepthFormat = GLKViewDrawableDepthFormat24;
-    view.drawableStencilFormat = GLKViewDrawableStencilFormat8;
- 
-    // Enable multisampling
-    view.drawableMultisample = GLKViewDrawableMultisample4X;
-    view.delegate = self;
-    
-    // setup context
-    [EAGLContext setCurrentContext:view.context];
-
-    self.vertexString = [NYGLHelper utf8String:[NYGLHelper loadShaderFilename:@"VertexShader" extension:@"glsl"]];
-    self.fragmentString = [NYGLHelper utf8String:[NYGLHelper loadShaderFilename:@"FragmentShader" extension:@"glsl"]];
-    GLuint  vs;
-    GLuint  fs;
-    
-    const char *vss = [self.vertexString UTF8String];
-    vs = glCreateShader(GL_VERTEX_SHADER);
-    glShaderSource(vs, 1, &vss, NULL);
-    glCompileShader(vs);
-    
-    const char *fss = [self.fragmentString UTF8String];
-    fs = glCreateShader(GL_FRAGMENT_SHADER);
-    glShaderSource(fs, 1, &fss, NULL);
-    glCompileShader(fs);
-    printf("vs: %i, fs: %i\n",vs,fs);
-    
-    int success;
-    char infoLog[512];
-    glGetShaderiv(vs, GL_COMPILE_STATUS, &success);
-    if (!success)
-    {
-        glGetShaderInfoLog(vs, 512, NULL, infoLog);
-        printf("ERROR::SHADER::VERTEX::COMPILATION_FAILED\n%s\n", infoLog);
-    }
-    
-    glGetShaderiv(fs, GL_COMPILE_STATUS, &success);
-    if (!success)
-    {
-        glGetShaderInfoLog(fs, 512, NULL, infoLog);
-        printf("ERROR::SHADER::FRAGMENT::COMPILATION_FAILED\n%s\n", infoLog);
-    }
-    
-    // 4. Attach the shaders
-    shaderProgram = glCreateProgram();
-    glAttachShader(shaderProgram, vs);
-    glAttachShader(shaderProgram, fs);
-    glLinkProgram(shaderProgram);
-    // check for linking errors
-    glGetProgramiv(shaderProgram, GL_LINK_STATUS, &success);
-    if (!success) {
-        glGetProgramInfoLog(shaderProgram, 512, NULL, infoLog);
-        printf("ERROR::SHADER::PROGRAM::LINKING_FAILED\n%s\n", infoLog);
-    }
-    
-    glDeleteShader(vs);
-    glDeleteShader(fs);
-    printf("positionUniform: %i, colourAttribute: %i, positionAttribute: %i\n",positionUniform,colourAttribute,positionAttribute);
-    
-}
-
-- (void)glkView:(GLKView *)view drawInRect:(CGRect)rect {
-    
+- (void)glkView:(nonnull GLKView *)view drawInRect:(CGRect)rect {
+    NSLog(@"GLView draw in %@", NSStringFromCGRect(rect));
     float colors[] = {
         1.0, 0.f, 0.f,1.f, 1.0, 0.f, 0.f,1.f, 1.0, 0.f, 0.f,1.f, 1.0, 0.f, 0.f,1.f, 1.0, 0.f, 0.f,1.f, 1.0, 0.f, 0.f,1.f, 1.0, 0.f, 0.f,1.f, 1.0, 0.f, 0.f,1.f, 1.0, 0.f, 0.f,1.f, 1.0, 0.f, 0.f,1.f, 1.0, 0.f, 0.f,1.f, 1.0, 0.f, 0.f,1.f, 1.0, 0.f, 0.f,1.f, 1.0, 0.f, 0.f,1.f, 1.0, 0.f, 0.f,1.f, 1.0, 0.f, 0.f,1.f, 1.0, 0.f, 0.f,1.f, 1.0, 0.f, 0.f,1.f, 1.0, 0.f, 0.f,1.f, 1.0, 0.f, 0.f,1.f, 1.0, 0.f, 0.f,1.f, 1.0, 0.f, 0.f,1.f, 1.0, 0.f, 0.f,1.f, 1.0, 0.f, 0.f,1.f, 1.0, 0.f, 0.f,1.f, 1.0, 0.f, 0.f,1.f, 1.0, 0.f, 0.f,1.f, 1.0, 0.f, 0.f,1.f, 1.0, 0.f, 0.f,1.f, 1.0, 0.f, 0.f,1.f, 1.0, 0.f, 0.f,1.f, 1.0, 0.f, 0.f,1.f, 1.0, 0.f, 0.f,1.f, 1.0, 0.f, 0.f,1.f, 1.0, 0.f, 0.f,1.f, 1.0, 0.f, 0.f,1.f, 1.0, 0.f, 0.f,1.f, 1.0, 0.f, 0.f,1.f, 1.0, 0.f, 0.f,1.f, 1.0, 0.f, 0.f,1.f, 1.0, 0.f, 0.f,1.f, 1.0, 0.f, 0.f,1.f, 1.0, 0.f, 0.f,1.f, 1.0, 0.f, 0.f,1.f, 1.0, 0.f, 0.f,1.f, 1.0, 0.f, 0.f,1.f, 1.0, 0.f, 0.f,1.f, 1.0, 0.f, 0.f,1.f, 1.0, 0.f, 0.f,1.f, 1.0, 0.f, 0.f,1.f, 1.0, 0.f, 0.f,1.f, 1.0, 0.f, 0.f,1.f, 1.0, 0.f, 0.f,1.f, 1.0, 0.f, 0.f,1.f, 1.0, 0.f, 0.f,1.f, 1.0, 0.f, 0.f,1.f, 1.0, 0.f, 0.f,1.f, 1.0, 0.f, 0.f,1.f, 1.0, 0.f, 0.f,1.f, 1.0, 0.f, 0.f,1.f, 1.0, 0.f, 0.f,1.f, 1.0, 0.f, 0.f,1.f, 1.0, 0.f, 0.f,1.f, 1.0, 0.f, 0.f,1.f, 1.0, 0.f, 0.f,1.f, 1.0, 0.f, 0.f,1.f, 1.0, 0.f, 0.f,1.f, 1.0, 0.f, 0.f,1.f, 1.0, 0.f, 0.f,1.f, 1.0, 0.f, 0.f,1.f, 1.0, 0.f, 0.f,1.f, 1.0, 0.f, 0.f,1.f, 1.0, 0.f, 0.f,1.f, 1.0, 0.f, 0.f,1.f, 1.0, 0.f, 0.f,1.f, 1.0, 0.f, 0.f,1.f, 1.0, 0.f, 0.f,1.f, 1.0, 0.f, 0.f,1.f, 1.0, 0.f, 0.f,1.f, 1.0, 0.f, 0.f,1.f, 1.0, 0.f, 0.f,1.f, 1.0, 0.f, 0.f,1.f, 1.0, 0.f, 0.f,1.f, 1.0, 0.f, 0.f,1.f, 1.0, 0.f, 0.f,1.f, 1.0, 0.f, 0.f,1.f, 1.0, 0.f, 0.f,1.f, 1.0, 0.f, 0.f,1.f, 1.0, 0.f, 0.f,1.f, 1.0, 0.f, 0.f,1.f, 1.0, 0.f, 0.f,1.f, 1.0, 0.f, 0.f,1.f, 1.0, 0.f, 0.f,1.f, 1.0, 0.f, 0.f,1.f, 1.0, 0.f, 0.f,1.f, 1.0, 0.f, 0.f,1.f, 1.0, 0.f, 0.f,1.f, 1.0, 0.f, 0.f,1.f, 1.0, 0.f, 0.f,1.f, 1.0, 0.f, 0.f,1.f, 1.0, 0.f, 0.f,1.f, 1.0, 0.f, 0.f,1.f, 1.0, 0.f, 0.f,1.f, 1.0, 0.f, 0.f,1.f, 1.0, 0.f, 0.f,1.f, 1.0, 0.f, 0.f,1.f, 1.0, 0.f, 0.f,1.f, 1.0, 0.f, 0.f,1.f, 1.0, 0.f, 0.f,1.f, 1.0, 0.f, 0.f,1.f, 1.0, 0.f, 0.f,1.f, 1.0, 0.f, 0.f,1.f, 1.0, 0.f, 0.f,1.f, 1.0, 0.f, 0.f,1.f, 1.0, 0.f, 0.f,1.f, 1.0, 0.f, 0.f,1.f, 1.0, 0.f, 0.f,1.f, 1.0, 0.f, 0.f,1.f, 1.0, 0.f, 0.f,1.f, 1.0, 0.f, 0.f,1.f, 1.0, 0.f, 0.f,1.f, 1.0, 0.f, 0.f,1.f, 1.0, 0.f, 0.f,1.f, 1.0, 0.f, 0.f,1.f, 1.0, 0.f, 0.f,1.f, 1.0, 0.f, 0.f,1.f, 1.0, 0.f, 0.f,1.f, 1.0, 0.f, 0.f,1.f, 1.0, 0.f, 0.f,1.f, 1.0, 0.f, 0.f,1.f, 1.0, 0.f, 0.f,1.f, 1.0, 0.f, 0.f,1.f, 1.0, 0.f, 0.f,1.f, 1.0, 0.f, 0.f,1.f, 1.0, 0.f, 0.f,1.f, 1.0, 0.f, 0.f,1.f, 1.0, 0.f, 0.f,1.f, 1.0, 0.f, 0.f,1.f, 1.0, 0.f, 0.f,1.f, 1.0, 0.f, 0.f,1.f, 1.0, 0.f, 0.f,1.f, 1.0, 0.f, 0.f,1.f, 1.0, 0.f, 0.f,1.f, 1.0, 0.f, 0.f,1.f, 1.0, 0.f, 0.f,1.f, 1.0, 0.f, 0.f,1.f, 1.0, 0.f, 0.f,1.f, 1.0, 0.f, 0.f,1.f, 1.0, 0.f, 0.f,1.f, 1.0, 0.f, 0.f,1.f, 1.0, 0.f, 0.f,1.f, 1.0, 0.f, 0.f,1.f, 1.0, 0.f, 0.f,1.f, 1.0, 0.f, 0.f,1.f, 1.0, 0.f, 0.f,1.f, 1.0, 0.f, 0.f,1.f, 1.0, 0.f, 0.f,1.f, 1.0, 0.f, 0.f,1.f, 1.0, 0.f, 0.f,1.f, 1.0, 0.f, 0.f,1.f, 1.0, 0.f, 0.f,1.f, 1.0, 0.f, 0.f,1.f, 1.0, 0.f, 0.f,1.f, 1.0, 0.f, 0.f,1.f, 1.0, 0.f, 0.f,1.f, 1.0, 0.f, 0.f,1.f, 1.0, 0.f, 0.f,1.f, 1.0, 0.f, 0.f,1.f, 1.0, 0.f, 0.f,1.f, 1.0, 0.f, 0.f,1.f, 1.0, 0.f, 0.f,1.f, 1.0, 0.f, 0.f,1.f, 1.0, 0.f, 0.f,1.f, 1.0, 0.f, 0.f,1.f, 1.0, 0.f, 0.f,1.f, 1.0, 0.f, 0.f,1.f, 1.0, 0.f, 0.f,1.f, 1.0, 0.f, 0.f,1.f, 1.0, 0.f, 0.f,1.f, 1.0, 0.f, 0.f,1.f, 1.0, 0.f, 0.f,1.f, 1.0, 0.f, 0.f,1.f, 1.0, 0.f, 0.f,1.f, 1.0, 0.f, 0.f,1.f, 1.0, 0.f, 0.f,1.f, 1.0, 0.f, 0.f,1.f, 1.0, 0.f, 0.f,1.f, 1.0, 0.f, 0.f,1.f, 1.0, 0.f, 0.f,1.f, 1.0, 0.f, 0.f,1.f, 1.0, 0.f, 0.f,1.f, 1.0, 0.f, 0.f,1.f, 1.0, 0.f, 0.f,1.f, 1.0, 0.f, 0.f,1.f, 1.0, 0.f, 0.f,1.f, 1.0, 0.f, 0.f,1.f, 1.0, 0.f, 0.f,1.f, 1.0, 0.f, 0.f,1.f, 1.0, 0.f, 0.f,1.f, 1.0, 0.f, 0.f,1.f, 1.0, 0.f, 0.f,1.f, 1.0, 0.f, 0.f,1.f, 1.0, 0.f, 0.f,1.f, 1.0, 0.f, 0.f,1.f, 1.0, 0.f, 0.f,1.f, 1.0, 0.f, 0.f,1.f, 1.0, 0.f, 0.f,1.f, 1.0, 0.f, 0.f,1.f, 1.0, 0.f, 0.f,1.f, 1.0, 0.f, 0.f,1.f, 1.0, 0.f, 0.f,1.f, 1.0, 0.f, 0.f,1.f, 1.0, 0.f, 0.f,1.f, 1.0, 0.f, 0.f,1.f, 1.0, 0.f, 0.f,1.f, 1.0, 0.f, 0.f,1.f, 1.0, 0.f, 0.f,1.f, 1.0, 0.f, 0.f,1.f, 1.0, 0.f, 0.f,1.f, 1.0, 0.f, 0.f,1.f, 1.0, 0.f, 0.f,1.f, 1.0, 0.f, 0.f,1.f, 1.0, 0.f, 0.f,1.f, 1.0, 0.f, 0.f,1.f, 1.0, 0.f, 0.f,1.f, 1.0, 0.f, 0.f,1.f, 1.0, 0.f, 0.f,1.f, 1.0, 0.f, 0.f,1.f, 1.0, 0.f, 0.f,1.f, 1.0, 0.f, 0.f,1.f, 1.0, 0.f, 0.f,1.f, 1.0, 0.f, 0.f,1.f, 1.0, 0.f, 0.f,1.f, 1.0, 0.f, 0.f,1.f, 1.0, 0.f, 0.f,1.f, 1.0, 0.f, 0.f,1.f, 1.0, 0.f, 0.f,1.f, 1.0, 0.f, 0.f,1.f, 1.0, 0.f, 0.f,1.f, 1.0, 0.f, 0.f,1.f, 1.0, 0.f, 0.f,1.f, 1.0, 0.f, 0.f,1.f, 1.0, 0.f, 0.f,1.f, 1.0, 0.f, 0.f,1.f, 1.0, 0.f, 0.f,1.f, 1.0, 0.f, 0.f,1.f, 1.0, 0.f, 0.f,1.f, 1.0, 0.f, 0.f,1.f, 1.0, 0.f, 0.f,1.f, 1.0, 0.f, 0.f,1.f, 1.0, 0.f, 0.f,1.f, 1.0, 0.f, 0.f,1.f, 1.0, 0.f, 0.f,1.f, 1.0, 0.f, 0.f,1.f, 1.0, 0.f, 0.f,1.f, 1.0, 0.f, 0.f,1.f, 1.0, 0.f, 0.f,1.f, 1.0, 0.f, 0.f,1.f, 1.0, 0.f, 0.f,1.f, 1.0, 0.f, 0.f,1.f, 1.0, 0.f, 0.f,1.f, 1.0, 0.f, 0.f,1.f, 1.0, 0.f, 0.f,1.f, 1.0, 0.f, 0.f,1.f, 1.0, 0.f, 0.f,1.f, 1.0, 0.f, 0.f,1.f, 1.0, 0.f, 0.f,1.f, 1.0, 0.f, 0.f,1.f, 1.0, 0.f, 0.f,1.f, 1.0, 0.f, 0.f,1.f, 1.0, 0.f, 0.f,1.f, 1.0, 0.f, 0.f,1.f, 1.0, 0.f, 0.f,1.f, 1.0, 0.f, 0.f,1.f, 1.0, 0.f, 0.f,1.f, 1.0, 0.f, 0.f,1.f, 1.0, 0.f, 0.f,1.f, 1.0, 0.f, 0.f,1.f, 1.0, 0.f, 0.f,1.f, 1.0, 0.f, 0.f,1.f, 1.0, 0.f, 0.f,1.f, 1.0, 0.f, 0.f,1.f, 1.0, 0.f, 0.f,1.f, 1.0, 0.f, 0.f,1.f, 1.0, 0.f, 0.f,1.f, 1.0, 0.f, 0.f,1.f, 1.0, 0.f, 0.f,1.f, 1.0, 0.f, 0.f,1.f, 1.0, 0.f, 0.f,1.f, 1.0, 0.f, 0.f,1.f, 1.0, 0.f, 0.f,1.f, 1.0, 0.f, 0.f,1.f, 1.0, 0.f, 0.f,1.f, 1.0, 0.f, 0.f,1.f, 1.0, 0.f, 0.f,1.f, 1.0, 0.f, 0.f,1.f, 1.0, 0.f, 0.f,1.f, 1.0, 0.f, 0.f,1.f, 1.0, 0.f, 0.f,1.f, 1.0, 0.f, 0.f,1.f, 1.0, 0.f, 0.f,1.f, 1.0, 0.f, 0.f,1.f, 1.0, 0.f, 0.f,1.f, 1.0, 0.f, 0.f,1.f, 1.0, 0.f, 0.f,1.f, 1.0, 0.f, 0.f,1.f, 1.0, 0.f, 0.f,1.f, 1.0, 0.f, 0.f,1.f, 1.0, 0.f, 0.f,1.f, 1.0, 0.f, 0.f,1.f, 1.0, 0.f, 0.f,1.f, 1.0, 0.f, 0.f,1.f, 1.0, 0.f, 0.f,1.f, 1.0, 0.f, 0.f,1.f, 1.0, 0.f, 0.f,1.f, 1.0, 0.f, 0.f,1.f, 1.0, 0.f, 0.f,1.f, 1.0, 0.f, 0.f,1.f, 1.0, 0.f, 0.f,1.f, 1.0, 0.f, 0.f,1.f, 1.0, 0.f, 0.f,1.f, 1.0, 0.f, 0.f,1.f, 1.0, 0.f, 0.f,1.f, 1.0, 0.f, 0.f,1.f, 1.0, 0.f, 0.f,1.f, 1.0, 0.f, 0.f,1.f, 1.0, 0.f, 0.f,1.f, 1.0, 0.f, 0.f,1.f, 1.0, 0.f, 0.f,1.f, 1.0, 0.f, 0.f,1.f, 1.0, 0.f, 0.f,1.f, 1.0, 0.f, 0.f,1.f, 1.0, 0.f, 0.f,1.f, 1.0, 0.f, 0.f,1.f, 1.0, 0.f, 0.f,1.f, 1.0, 0.f, 0.f,1.f, 1.0, 0.f, 0.f,1.f, 1.0, 0.f, 0.f,1.f, 1.0, 0.f, 0.f,1.f, 1.0, 0.f, 0.f,1.f, 1.0, 0.f, 0.f,1.f, 1.0, 0.f, 0.f,1.f, 1.0, 0.f, 0.f,1.f, 1.0, 0.f, 0.f,1.f, 1.0, 0.f, 0.f,1.f, 1.0, 0.f, 0.f,1.f, 1.0, 0.f, 0.f,1.f, 1.0, 0.f, 0.f,1.f, 1.0, 0.f, 0.f,1.f, 1.0, 0.f, 0.f,1.f, 1.0, 0.f, 0.f,1.f, 1.0, 0.f, 0.f,1.f, 1.0, 0.f, 0.f,1.f, 1.0, 0.f, 0.f,1.f, 1.0, 0.f, 0.f,1.f, 1.0, 0.f, 0.f,1.f, 1.0, 0.f, 0.f,1.f, 1.0, 0.f, 0.f,1.f, 1.0, 0.f, 0.f,1.f, 1.0, 0.f, 0.f,1.f, 1.0, 0.f, 0.f,1.f, 1.0, 0.f, 0.f,1.f, 1.0, 0.f, 0.f,1.f, 1.0, 0.f, 0.f,1.f, 1.0, 0.f, 0.f,1.f, 1.0, 0.f, 0.f,1.f, 1.0, 0.f, 0.f,1.f, 1.0, 0.f, 0.f,1.f, 1.0, 0.f, 0.f,1.f, 1.0, 0.f, 0.f,1.f, 1.0, 0.f, 0.f,1.f, 1.0, 0.f, 0.f,1.f, 1.0, 0.f, 0.f,1.f, 1.0, 0.f, 0.f,1.f, 1.0, 0.f, 0.f,1.f, 1.0, 0.f, 0.f,1.f, 1.0, 0.f, 0.f,1.f, 1.0, 0.f, 0.f,1.f, 1.0, 0.f, 0.f,1.f, 1.0, 0.f, 0.f,1.f, 1.0, 0.f, 0.f,1.f, 1.0, 0.f, 0.f,1.f, 1.0, 0.f, 0.f,1.f, 1.0, 0.f, 0.f,1.f, 1.0, 0.f, 0.f,1.f, 1.0, 0.f, 0.f,1.f, 1.0, 0.f, 0.f,1.f, 1.0, 0.f, 0.f,1.f, 1.0, 0.f, 0.f,1.f, 1.0, 0.f, 0.f,1.f, 1.0, 0.f, 0.f,1.f, 1.0, 0.f, 0.f,1.f, 1.0, 0.f, 0.f,1.f, 1.0, 0.f, 0.f,1.f, 1.0, 0.f, 0.f,1.f, 1.0, 0.f, 0.f,1.f, 1.0, 0.f, 0.f,1.f, 1.0, 0.f, 0.f,1.f, 1.0, 0.f, 0.f,1.f, 1.0, 0.f, 0.f,1.f, 1.0, 0.f, 0.f,1.f, 1.0, 0.f, 0.f,1.f, 1.0, 0.f, 0.f,1.f, 1.0, 0.f, 0.f,1.f, 1.0, 0.f, 0.f,1.f, 1.0, 0.f, 0.f,1.f, 1.0, 0.f, 0.f,1.f, 1.0, 0.f, 0.f,1.f, 1.0, 0.f, 0.f,1.f, 1.0, 0.f, 0.f,1.f, 1.0, 0.f, 0.f,1.f, 1.0, 0.f, 0.f,1.f, 1.0, 0.f, 0.f,1.f, 1.0, 0.f, 0.f,1.f, 1.0, 0.f, 0.f,1.f, 1.0, 0.f, 0.f,1.f, 1.0, 0.f, 0.f,1.f, 1.0, 0.f, 0.f,1.f, 1.0, 0.f, 0.f,1.f, 1.0, 0.f, 0.f,1.f, 1.0, 0.f, 0.f,1.f, 1.0, 0.f, 0.f,1.f, 1.0, 0.f, 0.f,1.f, 1.0, 0.f, 0.f,1.f, 1.0, 0.f, 0.f,1.f, 1.0, 0.f, 0.f,1.f, 1.0, 0.f, 0.f,1.f, 1.0, 0.f, 0.f,1.f, 1.0, 0.f, 0.f,1.f, 1.0, 0.f, 0.f,1.f,
     };
@@ -127,9 +99,9 @@
 //        float y1 = (cbrt(x*x) + sqrt(delta)) / 2;
         float y2 = (cbrt(x*x) - sqrt(delta)) / 2;
         if (i%2==0) {
-            [self beatX:&x y:&y1];
+            [NYGLHelper beatX:&x y:&y1];
         } else {
-            [self beatX:&x y:&y2];
+            [NYGLHelper beatX:&x y:&y2];
         }
         verticesX[i] = x;
         verticesY[i] = i % 2 == 0 ? y1 - 0.575 : y2;
@@ -169,30 +141,35 @@
     // VAOs requires a call to glBindVertexArray anyways so we generally don't unbind VAOs (nor VBOs) when it's not directly necessary.
     glBindVertexArray(0);
     // Drawing code here.
-    CGFloat w = self.view.frame.size.width;
+    CGFloat w = rect.size.width;
     CGFloat x = w;
     CGFloat h = w;
-    CGFloat y = self.view.frame.size.height * 1.5;
+    CGFloat y = rect.size.height * 1.5;
     glViewport(x, y, w, h);
-    glClearColor(1.f, 0.94f, 0.96f, 1.0f);
-    glClear(GL_COLOR_BUFFER_BIT);
+    glClearColor(0.f, 0.f, 0.f, 0.0f);
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
     // draw our first triangle
-    glUseProgram(shaderProgram);
+    glUseProgram(self.shader.shaderProgram);
     glBindVertexArray(VAO);
     glDrawArrays(GL_LINE_STRIP, 0, numPoints);
     glLineWidth(3);
     glBindVertexArray(0);
 }
 
-- (void)beatX:(float *)x y:(float *)y {
-    float p = 0.0;
-    NSTimeInterval time = [[NSDate new] timeIntervalSince1970];
-    float tt = fmod(time,1.5)/1.5;
-    float ss = pow(tt,.2)*0.5 + 0.5;
-    ss = 1.0 + ss*0.5*sin(tt*6.2831*3.0 + *y * 0.5)*exp(-tt*4.0);
-//    p *= float2(0.5,1.5) + ss*float2(0.5,-0.5);
-    *x *= ss * 0.5 + 0.5;
-    *y *= ss *(- 0.5) + 1.5;
+- (GLKView *)glView {
+    if (!_glView) {
+        GLKView *glView = [[GLKView alloc] initWithFrame:CGRectZero context:[[EAGLContext alloc] initWithAPI:kEAGLRenderingAPIOpenGLES3]];
+        glView.drawableColorFormat = GLKViewDrawableColorFormatRGBA8888;
+        glView.drawableDepthFormat = GLKViewDrawableDepthFormat24;
+        glView.drawableStencilFormat = GLKViewDrawableStencilFormat8;
+        glView.drawableMultisample = GLKViewDrawableMultisample4X;
+        glView.delegate = self;
+        [EAGLContext setCurrentContext:glView.context];
+        _glView = glView;
+        _glView.backgroundColor = UIColor.clearColor;
+    }
+    return _glView;
 }
+
 @end
